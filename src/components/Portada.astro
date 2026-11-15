@@ -1,0 +1,94 @@
+---
+import Logo from './Logo.astro';
+import { negocio } from '../data/negocio';
+
+const favoritos = [
+  'Patatas bravas',
+  'Croquetas caseras',
+  'Gambas con sobrasada y huevo frito',
+  'Ensaladilla',
+  'Calamar a la plancha',
+  'Entrecot',
+  'Tarta de queso',
+];
+---
+
+<section id="inicio" class="relative overflow-hidden">
+  <div class="mx-auto grid max-w-6xl items-center gap-y-8 px-4 pb-14 pt-8 sm:px-6 md:min-h-[calc(100svh-4rem-3.5rem)] md:grid-cols-12 md:gap-x-10 md:pb-16 md:pt-10">
+    <!-- El rótulo -->
+    <div class="relative mx-auto w-full max-w-[34rem] pb-12 md:order-2 md:col-span-7 md:pb-0">
+      <Logo animado class="block w-full drop-shadow-[0_18px_30px_rgba(29,79,64,0.12)]" titulo="MTNEZ." />
+
+      <!-- Sello de estado: pisa solo el borde inferior del óvalo, nunca las letras.
+           Se rellena con JS; sin JS no aparece. -->
+      <p
+        data-estado
+        hidden
+        class="sello entrada-sello absolute right-0 top-[72%] grid aspect-[3/2] w-32 place-items-center rounded-[50%] border-[3px] px-3 text-center leading-none sm:w-40 md:-right-6"
+      >
+        <span>
+          <span data-estado-titulo class="block font-display text-[1.75rem] font-bold uppercase sm:text-[2.1rem]"></span>
+          <span data-estado-detalle class="mt-1 block text-[0.75rem] font-semibold leading-tight sm:text-[0.8125rem]"></span>
+        </span>
+      </p>
+    </div>
+
+    <!-- Texto -->
+    <div class="md:order-1 md:col-span-5">
+      <p class="antetitulo entrada-texto" style="animation-delay:1s">Bar de barrio · L'Eixample, València</p>
+      <h1 class="titular entrada-texto mt-4 text-[clamp(2.75rem,11vw,5.25rem)]" style="animation-delay:1.08s">
+        <span class="sr-only">Bar MTNEZ VLC: </span>Tapas para compartir y cocina de mercado
+      </h1>
+      <p class="entrada-texto mt-5 max-w-[42ch] text-lg text-gris" style="animation-delay:1.16s">
+        En Comte d'Altea, entre Ruzafa y la Gran Vía. Producto de mercado, raciones para el centro de la
+        mesa y un servicio pendiente de cada mesa.
+      </p>
+      <div class="entrada-texto mt-7 flex flex-wrap gap-3" style="animation-delay:1.24s">
+        <a href={negocio.telefonoHref} class="btn btn-verde">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg>
+          Reservar mesa
+        </a>
+        <a href="#carta" class="btn btn-borde">Ver la carta</a>
+      </div>
+      <p class="entrada-texto mt-4 text-[0.9375rem] text-gris" style="animation-delay:1.3s">
+        Los fines de semana se llena: mejor reservar.
+      </p>
+      <a
+        href="#resenas"
+        class="entrada-texto mt-6 inline-flex items-center gap-2 text-[0.9375rem] font-semibold underline decoration-verde decoration-2 underline-offset-4"
+        style="animation-delay:1.36s"
+      >
+        <span class="text-ambar" aria-hidden="true">★</span>
+        {String(negocio.google.nota).replace('.', ',')} en Google · {negocio.google.textoResenas} reseñas
+      </a>
+    </div>
+  </div>
+
+  <!-- Banda de lo que más nombran los clientes -->
+  <div class="bg-tinta text-cal">
+    <p class="sr-only">Lo que más nombran los clientes:</p>
+    <ul class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-3 gap-y-2 px-4 py-4 font-display text-[1.0625rem] uppercase tracking-wide sm:px-6 lg:gap-x-4 lg:text-base">
+      {
+        favoritos.map((f, i) => (
+          <li class="flex items-center gap-3 whitespace-nowrap lg:gap-4">
+            {i > 0 && <span class="inline-block h-2 w-3 rounded-[50%] bg-verde" aria-hidden="true" />}
+            {f}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sello {
+    border-color: var(--color-verde);
+    color: var(--color-botella);
+    background: var(--color-cal);
+    transform: rotate(-8deg);
+  }
+  .sello[data-abierto='false'] {
+    border-color: var(--color-tinta);
+    color: var(--color-tinta);
+  }
+</style>

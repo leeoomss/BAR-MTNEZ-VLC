@@ -1,0 +1,29 @@
+---
+import HuecoFoto from './HuecoFoto.astro';
+---
+
+<section id="la-casa" class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28" aria-labelledby="titulo-casa">
+  <div class="grid gap-10 md:grid-cols-12 md:gap-12">
+    <div class="md:col-span-5">
+      <p class="antetitulo">La casa</p>
+      <h2 id="titulo-casa" class="titular mt-3 text-[clamp(2.5rem,8vw,4rem)]">Un bar de barrio, como los de antes</h2>
+      <div class="mt-6 space-y-4 text-gris">
+        <p>
+          MTNEZ. es un bar de barrio en L'Eixample: cocina de mercado, tapas pensadas para compartir y un
+          servicio atento con cada mesa. El fin de semana se llena, así que conviene reservar.
+        </p>
+        <p>
+          Aquí se viene a pedir al centro: unas bravas, las croquetas de la casa, una ensaladilla y, sobre todo,
+          las gambas con sobrasada y huevo frito, que es el plato que más se repite en las reseñas.
+        </p>
+      </div>
+      <p class="pendiente mt-6">Historia: pendiente · año de apertura y quién está detrás</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 sm:gap-4 md:col-span-7">
+      <HuecoFoto que="La barra con gente, a media tarde" class="col-span-2 aspect-[16/10]" />
+      <HuecoFoto que="Gambas con sobrasada y huevo frito, cenital" class="aspect-square" />
+      <HuecoFoto que="El dueño o el equipo detrás de la barra" class="aspect-square" />
+    </div>
+  </div>
+</section>

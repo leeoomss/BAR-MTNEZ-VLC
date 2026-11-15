@@ -1,0 +1,103 @@
+---
+import { carta } from '../data/carta';
+const hayPrecios = carta.some((c) => c.platos.some((p) => p.precio));
+---
+
+<section id="carta" class="border-t border-tinta/10 bg-white" aria-labelledby="titulo-carta">
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="antetitulo">La carta</p>
+        <h2 id="titulo-carta" class="titular mt-3 text-[clamp(2.5rem,8vw,4rem)]">Para pedir al centro</h2>
+      </div>
+      {
+        !hayPrecios && (
+          <p class="pendiente max-w-full whitespace-normal">Precios: pendiente · pedir la carta con precios al dueño</p>
+        )
+      }
+    </div>
+
+    <!-- Índice de categorías -->
+    <nav aria-label="Categorías de la carta" class="-mx-4 mt-8 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:px-0">
+      <ul class="flex w-max gap-2">
+        {
+          carta.map((c) => (
+            <li>
+              <a href={`#${c.id}`} class="chip">{c.titulo}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="mt-10 gap-x-16 md:columns-2">
+      {
+        carta.map((c) => (
+          <section id={c.id} class="mb-12 break-inside-avoid" aria-labelledby={`t-${c.id}`}>
+            <h3 id={`t-${c.id}`} class="flex items-center gap-3 font-display text-2xl font-bold uppercase tracking-wide">
+              <span class="inline-block h-3 w-[1.1rem] rounded-[50%] border-2 border-verde" aria-hidden="true" />
+              {c.titulo}
+            </h3>
+            {c.nota && <p class="mt-2 text-sm text-gris">{c.nota}</p>}
+            <ul class="mt-4 divide-y divide-tinta/10 border-t-2 border-tinta">
+              {c.platos.map((p) => (
+                <li class="plato flex items-baseline gap-3 py-4">
+                  <div class="min-w-0 flex-1">
+                    <p class="font-semibold leading-snug">
+                      {p.nombre}
+                      {p.destacado && (
+                        <span class="ml-1 inline-block -rotate-3 rounded-[50%] border-2 border-verde px-3 py-0.5 align-middle text-[0.6875rem] font-bold uppercase tracking-wider text-botella">
+                          {p.destacado}
+                        </span>
+                      )}
+                    </p>
+                    {p.detalle && <p class="mt-0.5 text-[0.9375rem] text-gris">{p.detalle}</p>}
+                    {!p.precio && (
+                      <p class="mt-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-gris sm:hidden">
+                        Precio: pendiente
+                      </p>
+                    )}
+                  </div>
+                  {p.precio ? (
+                    <p class="shrink-0 font-display text-xl font-bold">{p.precio}</p>
+                  ) : (
+                    <p class="hidden shrink-0 text-[0.6875rem] font-semibold uppercase tracking-wider text-gris sm:block">
+                      Precio: pendiente
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+
+    <p class="max-w-prose text-[0.9375rem] text-gris">
+      Si tienes alguna alergia o intolerancia, avísanos al pedir y te decimos qué puedes tomar.
+    </p>
+  </div>
+</section>
+
+<style>
+  .chip {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    border-radius: 9999px;
+    border: 2px solid var(--color-tinta);
+    padding-inline: 1.1rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  @media (hover: hover) {
+    .chip:hover {
+      background: var(--color-tinta);
+      color: var(--color-cal);
+    }
+  }
+</style>

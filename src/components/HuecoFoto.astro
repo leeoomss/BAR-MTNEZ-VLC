@@ -1,0 +1,21 @@
+---
+// Hueco marcado para una foto que falta. Sustituir por <Picture> de astro:assets
+// cuando lleguen las fotos (src/assets/), que ya genera WebP, srcset y lazy loading.
+interface Props {
+  que: string;
+  class?: string;
+}
+const { que, class: clase = '' } = Astro.props;
+---
+
+<div class:list={['hueco-foto', clase]} role="img" aria-label={`Espacio reservado para foto: ${que}`}>
+  <div class="max-w-[22ch]">
+    <svg class="mx-auto mb-3 h-8 w-8 text-verde" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <rect x="3" y="6" width="18" height="14" rx="2"></rect>
+      <circle cx="12" cy="13" r="3.5"></circle>
+      <path d="M8 6l1.5-2h5L16 6"></path>
+    </svg>
+    <p class="text-[0.75rem] font-bold uppercase tracking-[0.16em] text-botella">Foto:</p>
+    <p class="mt-1 text-sm font-medium text-gris">{que}</p>
+  </div>
+</div>

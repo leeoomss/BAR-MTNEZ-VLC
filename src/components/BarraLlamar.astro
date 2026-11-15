@@ -1,0 +1,23 @@
+---
+// Barra fija en móvil: llamar siempre a mano.
+import { negocio } from '../data/negocio';
+---
+
+<div class="barra fixed inset-x-0 bottom-0 z-50 px-3 pt-2 md:hidden">
+  <div class="mx-auto flex max-w-md gap-2 rounded-full bg-tinta p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+    <a href={negocio.telefonoHref} class="btn btn-verde min-h-13 flex-1 text-[1.0625rem]">
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg>
+      Llamar y reservar
+    </a>
+    <a href={negocio.mapsUrl} target="_blank" rel="noopener" class="btn min-h-13 px-5 text-cal" aria-label="Ir: cómo llegar en Google Maps">
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12Z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
+      Ir
+    </a>
+  </div>
+</div>
+
+<style>
+  .barra {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+</style>

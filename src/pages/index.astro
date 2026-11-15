@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Portada from '../components/Portada.astro';
+import LaCasa from '../components/LaCasa.astro';
+import Carta from '../components/Carta.astro';
+import Grupos from '../components/Grupos.astro';
+import Horario from '../components/Horario.astro';
+import Resenas from '../components/Resenas.astro';
+import Ubicacion from '../components/Ubicacion.astro';
+import Pie from '../components/Pie.astro';
+import BarraLlamar from '../components/BarraLlamar.astro';
+---
+
+<Base>
+  <Cabecera />
+  <main id="contenido">
+    <Portada />
+    <LaCasa />
+    <Carta />
+    <Grupos />
+    <Horario />
+    <Resenas />
+    <Ubicacion />
+  </main>
+  <Pie />
+  <BarraLlamar />
+</Base>

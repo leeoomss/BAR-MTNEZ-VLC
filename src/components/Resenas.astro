@@ -1,0 +1,34 @@
+---
+import { negocio } from '../data/negocio';
+const nota = String(negocio.google.nota).replace('.', ',');
+const pct = (negocio.google.nota / 5) * 100;
+---
+
+<section id="resenas" class="border-y border-tinta/10 bg-white" aria-labelledby="titulo-resenas">
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-24">
+    <div>
+      <p class="antetitulo">Reseñas</p>
+      <h2 id="titulo-resenas" class="titular mt-3 text-[clamp(2.5rem,8vw,4rem)]">La nota de los clientes</h2>
+      <p class="mt-5 max-w-[44ch] text-gris">
+        Las reseñas las escriben los clientes, no nosotros. Están todas en Google, las buenas y las otras.
+      </p>
+      <a href={negocio.mapsUrl} target="_blank" rel="noopener" class="btn btn-borde mt-7">
+        Leer las reseñas en Google
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+      </a>
+    </div>
+
+    <div class="flex justify-center md:justify-end">
+      <div class="grid aspect-[3/2] w-full max-w-[26rem] place-items-center rounded-[50%] border-[5px] border-verde bg-cal text-center">
+        <div>
+          <p class="font-display text-[clamp(5rem,22vw,8.5rem)] font-bold leading-none">{nota}</p>
+          <p class="relative mx-auto mt-2 w-max text-2xl tracking-[0.15em]" role="img" aria-label={`${nota} de 5 estrellas`}>
+            <span class="text-tinta/20" aria-hidden="true">★★★★★</span>
+            <span class="absolute inset-0 overflow-hidden whitespace-nowrap text-ambar" style={`width:${pct}%`} aria-hidden="true">★★★★★</span>
+          </p>
+          <p class="mt-2 font-semibold">{negocio.google.textoResenas} reseñas</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

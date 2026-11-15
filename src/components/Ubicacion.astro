@@ -1,0 +1,31 @@
+---
+import { negocio } from '../data/negocio';
+const d = negocio.direccion;
+---
+
+<section id="donde" class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28" aria-labelledby="titulo-donde">
+  <div class="grid gap-10 md:grid-cols-12">
+    <div class="md:col-span-4">
+      <p class="antetitulo">Dónde estamos</p>
+      <h2 id="titulo-donde" class="titular mt-3 text-[clamp(2.5rem,8vw,4rem)]">Comte d'Altea, 35</h2>
+      <address class="mt-6 not-italic leading-relaxed">
+        {d.calle}<br />
+        {d.cp} {d.ciudad}<br />
+        <span class="text-gris">{d.barrio} · {d.referencia}</span>
+      </address>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href={negocio.mapsUrl} target="_blank" rel="noopener" class="btn btn-verde">Cómo llegar</a>
+        <a href={negocio.telefonoHref} class="btn btn-borde">{negocio.telefono}</a>
+      </div>
+    </div>
+
+    <div class="mapa relative overflow-hidden rounded-[2rem] border-2 border-tinta bg-cal-2 md:col-span-8">
+      <iframe
+        title={`Mapa: ${negocio.nombre}, ${d.calle}, ${d.ciudad}`}
+        src={negocio.mapsEmbed}
+        class="block aspect-[4/5] w-full sm:aspect-[16/10]"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,92 @@
+---
+import '../styles/global.css';
+import { negocio, horario } from '../data/negocio';
+
+const titulo = "Bar MTNEZ VLC · Tapas y cocina de mercado en L'Eixample, València";
+const descripcion =
+  "Bar de barrio en Carrer del Comte d'Altea, 35 (València), entre Ruzafa y la Gran Vía. Tapas para compartir, cocina de mercado y menús para grupos. 4,7 en Google. Reservas: 670 00 17 52.";
+const url = new URL(Astro.url.pathname, Astro.site);
+const og = new URL('/og.png', Astro.site);
+
+// Agrupa días con el mismo horario para schema.org
+const diasEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const abiertos = horario.map((h, i) => ({ ...h, en: diasEn[i] })).filter((h) => h.abre);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': `${Astro.site}#restaurante`,
+  name: negocio.nombre,
+  url: Astro.site?.toString(),
+  image: og.toString(),
+  logo: new URL('/logo-mtnez.svg', Astro.site).toString(),
+  telephone: negocio.telefono.replace(/\s/g, ''),
+  priceRange: negocio.precio,
+  servesCuisine: ['Tapas', 'Cocina de mercado', 'Española'],
+  acceptsReservations: true,
+  hasMenu: `${Astro.site}#carta`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: negocio.direccion.calle,
+    postalCode: negocio.direccion.cp,
+    addressLocality: negocio.direccion.ciudad,
+    addressRegion: negocio.direccion.region,
+    addressCountry: negocio.direccion.pais,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: negocio.geo.lat, longitude: negocio.geo.lng },
+  hasMap: negocio.mapsUrl,
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: abiertos.map((h) => h.en),
+      opens: '11:00',
+      closes: '23:00',
+    },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: negocio.google.nota,
+    reviewCount: negocio.google.resenas,
+    bestRating: 5,
+  },
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={url} />
+    <meta name="theme-color" content="#F6F3EC" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={negocio.nombre} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Logo de MTNEZ.: letras negras dentro de un óvalo verde" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="geo.region" content="ES-V" />
+    <meta name="geo.placename" content="València" />
+    <meta name="geo.position" content={`${negocio.geo.lat};${negocio.geo.lng}`} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a href="#contenido" class="sr-only z-[60] rounded-full bg-tinta px-5 py-3 font-semibold text-cal focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+      Saltar al contenido
+    </a>
+    <slot />
+  </body>
+</html>

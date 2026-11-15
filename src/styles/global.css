@@ -1,0 +1,173 @@
+@import '@fontsource-variable/antonio';
+@import '@fontsource-variable/instrument-sans';
+@import 'tailwindcss';
+
+/* Dirección A · «Rótulo de barrio» */
+@theme {
+  --color-verde: #2e7d64; /* verde MTNEZ: fondos, trazos, texto grande */
+  --color-botella: #1d4f40; /* texto pequeño en verde (AA sobre cal) */
+  --color-tinta: #111111;
+  --color-cal: #f6f3ec;
+  --color-cal-2: #ece7db;
+  --color-ambar: #e3a93b;
+  --color-gris: #55524b; /* texto secundario (AA sobre cal) */
+
+  --font-display: 'Antonio Variable', 'Arial Narrow', sans-serif;
+  --font-sans: 'Instrument Sans Variable', system-ui, sans-serif;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-cal text-tinta font-sans antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  ::selection {
+    background: var(--color-verde);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-verde);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .sobre-oscuro :focus-visible {
+    outline-color: var(--color-ambar);
+  }
+}
+
+@layer components {
+  .titular {
+    @apply font-display uppercase leading-[0.92] tracking-[-0.01em];
+    font-weight: 700;
+  }
+  .antetitulo {
+    @apply text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-botella;
+  }
+  .sobre-oscuro .antetitulo {
+    @apply text-ambar;
+  }
+
+  /* Botones con forma de óvalo, como el logo */
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-semibold
+      transition-[transform,background-color,color,box-shadow] duration-200 ease-out-quint;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-verde {
+    @apply bg-verde text-white;
+  }
+  .btn-borde {
+    @apply border-2 border-tinta text-tinta;
+  }
+  .btn-claro {
+    @apply bg-cal text-tinta;
+  }
+  @media (hover: hover) {
+    .btn-verde:hover {
+      @apply bg-botella;
+    }
+    .btn-borde:hover {
+      @apply bg-tinta text-cal;
+    }
+    .btn-claro:hover {
+      @apply bg-white;
+    }
+  }
+
+  /* Hueco de foto para sustituir */
+  .hueco-foto {
+    @apply relative grid place-items-center overflow-hidden border-2 border-dashed border-verde/60 bg-cal-2 p-6 text-center;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0 14px,
+      rgb(46 125 100 / 0.06) 14px 15px
+    );
+  }
+
+  /* Hueco de dato pendiente */
+  .pendiente {
+    @apply inline-block rounded-full border border-dashed border-gris px-2.5 py-0.5 text-[0.75rem] font-semibold uppercase tracking-wider text-gris;
+  }
+}
+
+/* Entrada de la portada */
+@keyframes trazo {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes sube {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes sello {
+  from {
+    opacity: 0;
+    transform: scale(1.25) rotate(-14deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(-8deg);
+  }
+}
+
+.entrada-ovalo {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: trazo 1.1s var(--ease-out-quint) 0.15s forwards;
+}
+.entrada-letra {
+  opacity: 0;
+  animation: sube 0.6s var(--ease-out-quint) forwards;
+  transform-box: fill-box;
+}
+.entrada-texto {
+  opacity: 0;
+  animation: sube 0.7s var(--ease-out-quint) forwards;
+}
+.entrada-sello {
+  opacity: 0;
+  animation: sello 0.45s var(--ease-out-quint) 1.35s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .entrada-ovalo,
+  .entrada-letra,
+  .entrada-texto,
+  .entrada-sello {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+  .entrada-sello {
+    transform: rotate(-8deg);
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

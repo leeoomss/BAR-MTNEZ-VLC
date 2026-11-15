@@ -1,0 +1,41 @@
+---
+import Logo from './Logo.astro';
+import { negocio } from '../data/negocio';
+const d = negocio.direccion;
+const anio = new Date().getFullYear();
+---
+
+<footer class="sobre-oscuro bg-tinta pb-28 text-cal md:pb-0">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-4">
+    <div>
+      <Logo variante="oscuro" class="h-20 w-auto" titulo="" />
+      <p class="mt-4 text-sm text-cal/70">Bar de barrio con cocina de mercado en {d.barrio}, {d.ciudad}.</p>
+    </div>
+    <div>
+      <h2 class="font-display text-lg font-bold uppercase tracking-wide">Dirección</h2>
+      <address class="mt-3 not-italic text-cal/80">
+        {d.calle}<br />{d.cp} {d.ciudad}
+      </address>
+    </div>
+    <div>
+      <h2 class="font-display text-lg font-bold uppercase tracking-wide">Horario</h2>
+      <p class="mt-3 text-cal/80">Martes a domingo<br />11:00 – 23:00<br />Lunes cerrado</p>
+    </div>
+    <div>
+      <h2 class="font-display text-lg font-bold uppercase tracking-wide">Reservas</h2>
+      <p class="mt-3">
+        <a href={negocio.telefonoHref} class="text-cal/80 underline decoration-cal/30 underline-offset-4 hover:decoration-ambar">{negocio.telefono}</a>
+      </p>
+      <p class="mt-2">
+        <a href={negocio.mapsUrl} target="_blank" rel="noopener" class="text-cal/80 underline decoration-cal/30 underline-offset-4 hover:decoration-ambar">Ver en Google Maps</a>
+      </p>
+      <p class="mt-4"><span class="pendiente border-cal/50 text-cal/70">Instagram: pendiente</span></p>
+    </div>
+  </div>
+  <div class="border-t border-cal/10">
+    <div class="mx-auto flex max-w-6xl flex-wrap justify-between gap-2 px-4 py-6 text-sm text-cal/60 sm:px-6">
+      <p>© {anio} {negocio.nombre}</p>
+      <p><span class="pendiente border-cal/40 text-cal/60">Aviso legal y privacidad: pendiente</span></p>
+    </div>
+  </div>
+</footer>

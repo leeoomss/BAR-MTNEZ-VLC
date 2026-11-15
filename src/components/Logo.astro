@@ -1,0 +1,59 @@
+---
+// Logo MTNEZ. recreado en vectores (las letras son formas, no dependen de una fuente).
+interface Props {
+  class?: string;
+  animado?: boolean; // entrada de la portada
+  variante?: 'claro' | 'oscuro'; // oscuro = para fondos negros
+  titulo?: string;
+}
+const { class: clase = '', animado = false, variante = 'claro', titulo = 'MTNEZ.' } = Astro.props;
+
+const letras = [
+  '0,155 0,45 12,45 20,100 28,45 40,45 40,155 30,155 30,90 23,135 17,135 10,90 10,155',
+  '45,45 79,45 79,56 67.5,56 67.5,155 56.5,155 56.5,56 45,56',
+  '84,155 84,45 95,45 109,118 109,45 120,45 120,155 109,155 95,82 95,155',
+  '125,45 155,45 155,56 136,56 136,94 152,94 152,105 136,105 136,144 155,144 155,155 125,155',
+  '160,45 192,45 192,56 172,144 192,144 192,155 160,155 160,144 180,56 160,56',
+];
+const fondo = variante === 'claro' ? '#FFFFFF' : 'transparent';
+const tinta = variante === 'claro' ? '#111111' : '#F6F3EC';
+const trazo = variante === 'claro' ? '#2E7D64' : '#4FB38C';
+---
+
+<svg
+  class={clase}
+  viewBox="0 0 300 200"
+  role={titulo ? 'img' : undefined}
+  aria-label={titulo || undefined}
+  aria-hidden={titulo ? undefined : 'true'}>
+  <ellipse
+    cx="150"
+    cy="100"
+    rx="140"
+    ry="90"
+    fill={fondo}
+    stroke={trazo}
+    stroke-width="7"
+    stroke-linecap="round"
+    pathLength="1"
+    class={animado ? 'entrada-ovalo' : undefined}
+  ></ellipse>
+  <g fill={tinta} transform="translate(46 0)">
+    {
+      letras.map((p, i) => (
+        <polygon
+          points={p}
+          class={animado ? 'entrada-letra' : undefined}
+          style={animado ? `animation-delay:${0.45 + i * 0.07}s` : undefined}
+        />
+      ))
+    }
+    <rect
+      x="197"
+      y="144"
+      width="11"
+      height="11"
+      class={animado ? 'entrada-letra' : undefined}
+      style={animado ? 'animation-delay:0.95s' : undefined}></rect>
+  </g>
+</svg>

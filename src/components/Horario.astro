@@ -1,0 +1,78 @@
+---
+import { horario, ordenSemana, negocio } from '../data/negocio';
+---
+
+<section id="horario" class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28" aria-labelledby="titulo-horario">
+  <div class="grid gap-12 md:grid-cols-12">
+    <div class="md:col-span-5">
+      <p class="antetitulo">Horario</p>
+      <h2 id="titulo-horario" class="titular mt-3 text-[clamp(2.5rem,8vw,4rem)]">De martes a domingo</h2>
+      <p class="mt-5 text-gris">Abrimos a las 11:00 y cerramos a las 23:00. Los lunes, descanso.</p>
+
+      <p data-estado hidden class="estado mt-8 inline-flex items-center gap-3 rounded-full border-2 px-5 py-3 font-semibold">
+        <span class="punto h-3 w-3 rounded-full" aria-hidden="true"></span>
+        <span data-estado-texto></span>
+      </p>
+
+      <a href={negocio.telefonoHref} class="btn btn-verde mt-6 flex w-full sm:w-auto sm:inline-flex">
+        Reservar · {negocio.telefono}
+      </a>
+    </div>
+
+    <ol class="md:col-span-6 md:col-start-7">
+      {
+        ordenSemana.map((d) => {
+          const h = horario[d];
+          return (
+            <li data-dia={d} class="dia relative flex items-center justify-between border-b border-tinta/15 px-4 py-4 text-lg">
+              <span class="nombre font-semibold">
+                {h.dia}
+                <span class="hoy-etiqueta ml-2 hidden text-[0.75rem] font-bold uppercase tracking-wider text-botella">
+                  Hoy
+                </span>
+              </span>
+              <span class="tabular-nums">{h.abre ? `${h.abre} – ${h.cierra}` : 'Cerrado'}</span>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .estado {
+    border-color: var(--color-tinta);
+  }
+  .estado .punto {
+    background: var(--color-tinta);
+  }
+  .estado[data-abierto='true'] {
+    border-color: var(--color-verde);
+    color: var(--color-botella);
+  }
+  .estado[data-abierto='true'] .punto {
+    background: var(--color-verde);
+    box-shadow: 0 0 0 4px rgb(46 125 100 / 0.2);
+  }
+  /* El día de hoy, rodeado con el óvalo del logo */
+  .dia[data-hoy]::before {
+    content: '';
+    position: absolute;
+    inset: 0.2rem 0;
+    border: 3px solid var(--color-verde);
+    border-radius: 50%;
+    transform: rotate(-1.5deg);
+    pointer-events: none;
+  }
+  .dia[data-hoy] .hoy-etiqueta {
+    display: inline;
+  }
+</style>
+
+<script>
+  import { pintarEstado } from '../scripts/estado';
+  pintarEstado();
+  // Por si la página se queda abierta y cambia la hora.
+  setInterval(pintarEstado, 60_000);
+</script>
